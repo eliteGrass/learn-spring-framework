@@ -44,6 +44,7 @@ public interface BeanDefinitionReader {
 	 * <p>The factory is exposed through the BeanDefinitionRegistry interface,
 	 * encapsulating the methods that are relevant for bean definition handling.
 	 */
+	// beanDefinition
 	BeanDefinitionRegistry getRegistry();
 
 	/**

@@ -54,6 +54,10 @@ import org.springframework.core.io.Resource;
 @SuppressWarnings({"serial", "all"})
 public class XmlBeanFactory extends DefaultListableBeanFactory {
 
+	/* 他是Spring定义的bean解析器，读取相应的xml文件并将其封装成相对应的BeanDefinition对象
+				他继承与BeanDefinitionReader对象，我们可以查看还有PropertiesBeanDefinitionReader对象，
+				他还可以读取properties相应的配置文件
+	 */
 	private final XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(this);
 
 
@@ -73,6 +77,9 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	 * @param resource the XML resource to load bean definitions from
 	 * @param parentBeanFactory parent bean factory
 	 * @throws BeansException in case of loading or parsing errors
+	 */
+	/* 注意有一个parentBeanFactory参数，他是传入父容器，他是解决父子容器的问题，
+		我们可以在子容器获取相应的bean的时候，在没有获取到的时候，在父容器中进行获取
 	 */
 	public XmlBeanFactory(Resource resource, BeanFactory parentBeanFactory) throws BeansException {
 		super(parentBeanFactory);
