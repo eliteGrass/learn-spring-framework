@@ -291,7 +291,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 */
 	@Override
 	public int loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException {
-		// 装饰器模式的运用
+		// 装饰器模式的运用 ---- new EncodedResource(resource)
 		return loadBeanDefinitions(new EncodedResource(resource));
 	}
 
@@ -308,11 +308,14 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			logger.trace("Loading XML bean definitions from " + encodedResource);
 		}
 
+		// 获取当前配置文件（在线程池中）
 		Set<EncodedResource> currentResources = this.resourcesCurrentlyBeingLoaded.get();
 		if (currentResources == null) {
 			currentResources = new HashSet<>(4);
+			// 判断当前线程池中是否含有该集合
 			this.resourcesCurrentlyBeingLoaded.set(currentResources);
 		}
+		// 把当前配置文件流加入到线程池的set集合中
 		if (!currentResources.add(encodedResource)) {
 			throw new BeanDefinitionStoreException(
 					"Detected cyclic loading of " + encodedResource + " - check your import definitions!");
@@ -326,6 +329,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 				if (encodedResource.getEncoding() != null) {
 					inputSource.setEncoding(encodedResource.getEncoding());
 				}
+				// 开始进行读取相关的配置文件
 				return doLoadBeanDefinitions(inputSource, encodedResource.getResource());
 			}
 			finally {
@@ -337,6 +341,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 					"IOException parsing XML document from " + encodedResource.getResource(), ex);
 		}
 		finally {
+			// 使用完成后记得从线程池中移除
 			currentResources.remove(encodedResource);
 			if (currentResources.isEmpty()) {
 				this.resourcesCurrentlyBeingLoaded.remove();
@@ -379,6 +384,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @see #doLoadDocument
 	 * @see #registerBeanDefinitions
 	 */
+	// xml ---> BeanDefinition实例
 	protected int doLoadBeanDefinitions(InputSource inputSource, Resource resource)
 			throws BeanDefinitionStoreException {
 
@@ -504,11 +510,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @see BeanDefinitionDocumentReader#registerBeanDefinitions
 	 */
 	public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
-		// 创建BeanDefinition读取对象
+		// 创建BeanDefinition读取对象(BeanDefinitionDocumentReader)
 		BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
-		// 获取之前已经注册的数量
+		// BeanDefinitionRegistry：spring bean注册接口，我们的容器就实现了给接口，解析成BeanDefilition后加入到beanDefinitionMap中
+		// getBeanDefinitionCount，获取当前Map中已经创建的数量
 		int countBefore = getRegistry().getBeanDefinitionCount();
-		// 进行注册
+		// 进行注册读取命名空间及监听器注册
 		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
 		return getRegistry().getBeanDefinitionCount() - countBefore;
 	}
@@ -527,6 +534,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * Create the {@link XmlReaderContext} to pass over to the document reader.
 	 */
 	public XmlReaderContext createReaderContext(Resource resource) {
+		// 注意ReaderEventListener监听器是一个空监听器
 		return new XmlReaderContext(resource, this.problemReporter, this.eventListener,
 				this.sourceExtractor, this, getNamespaceHandlerResolver());
 	}
@@ -535,6 +543,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * Lazily create a default NamespaceHandlerResolver, if not set before.
 	 * @see #createDefaultNamespaceHandlerResolver()
 	 */
+	// 命名空间的实现，注意该配置META-INF/spring.handlers
 	public NamespaceHandlerResolver getNamespaceHandlerResolver() {
 		if (this.namespaceHandlerResolver == null) {
 			this.namespaceHandlerResolver = createDefaultNamespaceHandlerResolver();

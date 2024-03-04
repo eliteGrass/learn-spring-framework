@@ -78,6 +78,7 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	 * @param parentBeanFactory parent bean factory
 	 * @throws BeansException in case of loading or parsing errors
 	 */
+
 	/* 注意有一个parentBeanFactory参数，他是传入父容器，他是解决父子容器的问题，
 		我们可以在子容器获取相应的bean的时候，在没有获取到的时候，在父容器中进行获取
 	 */
