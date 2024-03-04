@@ -13,6 +13,8 @@
         https://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx
         https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.eliteGrass.com.cn/schema/eliteGrass
+
 ">
 
 	<bean id="user" class="com.eliteGrass.entity.User"/>

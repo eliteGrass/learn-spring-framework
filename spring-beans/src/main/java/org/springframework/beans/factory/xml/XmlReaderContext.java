@@ -16,11 +16,6 @@
 
 package org.springframework.beans.factory.xml;
 
-import java.io.StringReader;
-
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.parsing.ProblemReporter;
@@ -32,6 +27,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.lang.Nullable;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import java.io.StringReader;
 
 /**
  * Extension of {@link org.springframework.beans.factory.parsing.ReaderContext},
@@ -58,6 +57,8 @@ public class XmlReaderContext extends ReaderContext {
 	 * @param reader the XML bean definition reader in use
 	 * @param namespaceHandlerResolver the XML namespace resolver
 	 */
+
+	// 配置文件上下文对象
 	public XmlReaderContext(
 			Resource resource, ProblemReporter problemReporter,
 			ReaderEventListener eventListener, SourceExtractor sourceExtractor,

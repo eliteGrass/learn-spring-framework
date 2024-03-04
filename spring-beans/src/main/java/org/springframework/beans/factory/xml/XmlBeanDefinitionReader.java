@@ -515,7 +515,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		// BeanDefinitionRegistry：spring bean注册接口，我们的容器就实现了给接口，解析成BeanDefilition后加入到beanDefinitionMap中
 		// getBeanDefinitionCount，获取当前Map中已经创建的数量
 		int countBefore = getRegistry().getBeanDefinitionCount();
-		// 进行注册读取命名空间及监听器注册
+		// 进行注册读取命名空间及监听器注册，主要功能是进行注册BeanDefinition对象，
 		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
 		return getRegistry().getBeanDefinitionCount() - countBefore;
 	}

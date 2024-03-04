@@ -91,6 +91,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 */
 	@Override
 	public void registerBeanDefinitions(Document doc, XmlReaderContext readerContext) {
+		// 配置文件上下文对象
 		this.readerContext = readerContext;
 		// 开始进行解析
 		doRegisterBeanDefinitions(doc.getDocumentElement());
@@ -129,7 +130,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		// BeanDefinitionParserDelegate : 解析xml主要对象
 		BeanDefinitionParserDelegate parent = this.delegate;
 		this.delegate = createDelegate(getReaderContext(), root, parent);
-
+		// 判断是否是默认的空间类型（http://www.springframework.org/schema/beans）
 		if (this.delegate.isDefaultNamespace(root)) {
 			// 获取环境profile相关的配置
 			String profileSpec = root.getAttribute(PROFILE_ATTRIBUTE);
@@ -156,10 +157,12 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		this.delegate = parent;
 	}
 
+	// 创建解析器
 	protected BeanDefinitionParserDelegate createDelegate(
 			XmlReaderContext readerContext, Element root, @Nullable BeanDefinitionParserDelegate parentDelegate) {
 
 		BeanDefinitionParserDelegate delegate = new BeanDefinitionParserDelegate(readerContext);
+		// 初始化一些默认配置
 		delegate.initDefaults(root, parentDelegate);
 		return delegate;
 	}
@@ -169,6 +172,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * "import", "alias", "bean".
 	 * @param root the DOM root element of the document
 	 */
+	// 开始进行标签的解析工作
 	protected void parseBeanDefinitions(Element root, BeanDefinitionParserDelegate delegate) {
 		// 是否是默认的元素类型
 		if (delegate.isDefaultNamespace(root)) {
@@ -195,12 +199,15 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	}
 
 	private void parseDefaultElement(Element ele, BeanDefinitionParserDelegate delegate) {
+		// 倒入其他的配置文件
 		if (delegate.nodeNameEquals(ele, IMPORT_ELEMENT)) {
 			importBeanDefinitionResource(ele);
 		}
+		// 读取alias标签
 		else if (delegate.nodeNameEquals(ele, ALIAS_ELEMENT)) {
 			processAliasRegistration(ele);
 		}
+		// 读取bean标签
 		else if (delegate.nodeNameEquals(ele, BEAN_ELEMENT)) {
 			// 解析bean标签
 			processBeanDefinition(ele, delegate);
@@ -223,6 +230,8 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		}
 
 		// Resolve system properties: e.g. "${user.dir}"
+
+		// 解析相关的方法，resolveRequiredPlaceholders是解析相关的方法
 		location = getReaderContext().getEnvironment().resolveRequiredPlaceholders(location);
 
 		Set<Resource> actualResources = new LinkedHashSet<>(4);
@@ -312,6 +321,8 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 * and registering it with the registry.
 	 */
 	protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) {
+		// 解析相应的配置文件成BeanDefinition对象，并且封装成相应的BeanDefinitionHolder对象，
+		// BeanDefinitionHolder：里面主要封装有BeanDefinition对象以及相应的名称和别名。
 		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);
 		if (bdHolder != null) {
 			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);

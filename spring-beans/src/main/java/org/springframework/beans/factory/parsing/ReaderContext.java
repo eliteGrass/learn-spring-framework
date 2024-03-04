@@ -32,7 +32,7 @@ public class ReaderContext {
 	private final Resource resource;
 
 	private final ProblemReporter problemReporter;
-
+	// 读取事件监听器
 	private final ReaderEventListener eventListener;
 
 	private final SourceExtractor sourceExtractor;

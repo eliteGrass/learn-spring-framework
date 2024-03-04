@@ -116,6 +116,8 @@ public interface ConfigurableEnvironment extends Environment, ConfigurableProper
 	 * variables.
 	 * @see AbstractEnvironment#customizePropertySources
 	 */
+
+	// 获取Spring上下文的属性列表
 	MutablePropertySources getPropertySources();
 
 	/**
@@ -131,6 +133,8 @@ public interface ConfigurableEnvironment extends Environment, ConfigurableProper
 	 * to a property, {@code null} will be returned and an INFO-level log message will be
 	 * issued noting the exception.
 	 */
+
+	// 获取JVM虚拟机的系统属性
 	Map<String, Object> getSystemProperties();
 
 	/**
