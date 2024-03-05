@@ -325,9 +325,10 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		// BeanDefinitionHolder：里面主要封装有BeanDefinition对象以及相应的名称和别名。
 		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);
 		if (bdHolder != null) {
+			// 解析内部自定义标签
 			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);
 			try {
-				// Register the final decorated instance.
+				// 进行注册
 				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());
 			}
 			catch (BeanDefinitionStoreException ex) {
