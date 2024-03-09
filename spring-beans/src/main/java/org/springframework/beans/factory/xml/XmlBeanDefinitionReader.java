@@ -308,14 +308,16 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			logger.trace("Loading XML bean definitions from " + encodedResource);
 		}
 
-		// 获取当前配置文件（在线程池中）
+		// 获取当前线程中的配置文件（在线程池中）
 		Set<EncodedResource> currentResources = this.resourcesCurrentlyBeingLoaded.get();
+		// 如果当前线程中为null
 		if (currentResources == null) {
+			// 当前线程池中没有，创建相应的集合
 			currentResources = new HashSet<>(4);
-			// 判断当前线程池中是否含有该集合
+			// 把当前文件放入
 			this.resourcesCurrentlyBeingLoaded.set(currentResources);
 		}
-		// 把当前配置文件流加入到线程池的set集合中
+		// 当前配置文件已经加入到线程池中
 		if (!currentResources.add(encodedResource)) {
 			throw new BeanDefinitionStoreException(
 					"Detected cyclic loading of " + encodedResource + " - check your import definitions!");

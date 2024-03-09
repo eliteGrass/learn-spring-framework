@@ -866,7 +866,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 		}
 
-		// 先进行获取相应的beanName
+		// 先根据相应的beanName获取
 		BeanDefinition existingDefinition = this.beanDefinitionMap.get(beanName);
 		// 如果已经存在
 		if (existingDefinition != null) {
@@ -898,8 +898,9 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			// 重新进行覆盖
 			this.beanDefinitionMap.put(beanName, beanDefinition);
 		}
+		// map中不存在
 		else {
-			// 不存在，判断是否已经在创建bean
+			// 不存在，判断是否已经在创建bean，如果没有进行创建
 			if (hasBeanCreationStarted()) {
 				// Cannot modify startup-time collection elements anymore (for stable iteration)
 
@@ -915,6 +916,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 					removeManualSingletonName(beanName);
 				}
 			}
+			// 已将存在
 			else {
 				// Still in startup registration phase
 				this.beanDefinitionMap.put(beanName, beanDefinition);
@@ -923,7 +925,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 			this.frozenBeanDefinitionNames = null;
 		}
-
+		// 如果已经存在，并且单例池中也已经存在
 		if (existingDefinition != null || containsSingleton(beanName)) {
 			resetBeanDefinition(beanName);
 		}
