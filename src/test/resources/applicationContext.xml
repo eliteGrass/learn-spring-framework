@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+
+">
+
+	<bean id="role" class="com.eliteGrass.entity.Role">
+		<constructor-arg name="id" value="10"/>
+		<constructor-arg name="product" ref="product"/>
+	</bean>
+
+	<bean id="parentUser" abstract="true">
+		<property name="age" value="18"/>
+	</bean>
+
+	<bean name="user, user1"  class="com.eliteGrass.entity.User" init-method="initMethod" destroy-method="destroyMethod" parent="parentUser">
+		<property name="userName" value="张三"/>
+		<property name="password" value="123456"/>
+		<property name="product" ref="product"/>
+	</bean>
+
+	<bean id="product" class="com.eliteGrass.entity.Product"></bean>
+<!--	<bean class="com.eliteGrass.instantiation.TestBeanPostProcessor"/>-->
+	<!--<user:custom-user-bern id="123456" username="test" password="123456"/>-->
+	<!--<bean id="user1" class="com.eliteGrass.instantiation.MyStaticBeanFactory" factory-method="createUser"/>
+
+	<bean id="instantiationBeanFactory" class="com.eliteGrass.instantiation.MyInstantiationBeanFactory"/>
+	<bean id="user2" factory-bean="instantiationBeanFactory" factory-method="createUser"/>-->
+
+<!--	<bean id="user3" class="com.eliteGrass.instantiation.MyImplBeanFactory"/>-->
+</beans>

@@ -1,1 +1,2 @@
 http\://www.foo.com/schema/component=com.foo.ComponentNamespaceHandler
+http\://www.eliteGrass.com/schema/user=com.eliteGrass.handler.UserNamespaceHandler

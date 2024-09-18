@@ -44,6 +44,7 @@ import org.springframework.util.ObjectUtils;
  */
 public class EncodedResource implements InputStreamSource {
 
+	// 装饰器模式的运用
 	private final Resource resource;
 
 	@Nullable
