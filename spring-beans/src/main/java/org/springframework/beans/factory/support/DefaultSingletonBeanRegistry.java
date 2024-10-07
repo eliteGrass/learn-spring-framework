@@ -203,7 +203,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 				}
 			}
 		}
-		return singletonObject;
+ 		return singletonObject;
 	}
 
 	/**

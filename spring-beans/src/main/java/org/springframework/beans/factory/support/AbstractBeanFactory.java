@@ -241,7 +241,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			throws BeansException {
 		// 获取转换后的beanName(即我们的参数)，转换的原因是当name上带有&符号的时候，获取实现了FactoryBean的对象
 		// 如果传递的是别名，通过别名获取相应的id
-		String beanName = transformedBeanName(name);
+ 		String beanName = transformedBeanName(name);
 		Object bean;
 
 		// 获取单例池中的bean
@@ -1225,7 +1225,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name
 	 * @throws BeanDefinitionStoreException in case of an invalid bean definition
 	 */
-	protected RootBeanDefinition getMergedLocalBeanDefinition(String beanName) throws BeansException {
+	protected RootBeanDefinition  getMergedLocalBeanDefinition(String beanName) throws BeansException {
 		// 先从合并Map中获取
 		RootBeanDefinition mbd = this.mergedBeanDefinitions.get(beanName);
 		if (mbd != null) {
