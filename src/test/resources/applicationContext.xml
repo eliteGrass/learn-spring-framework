@@ -22,7 +22,9 @@
 		<property name="product" ref="product"/>
 	</bean>-->
 
-<!--	<bean id="product" class="com.eliteGrass.entity.Product"></bean>-->
+	<bean id="product" class="com.eliteGrass.entity.Product" scope="prototype">
+		<constructor-arg name="id" value="123"/>
+	</bean>
 <!--	<bean class="com.eliteGrass.instantiation.TestBeanPostProcessor"/>-->
 	<!--<user:custom-user-bern id="123456" username="test" password="123456"/>-->
 	<!--<bean id="user1" class="com.eliteGrass.instantiation.MyStaticBeanFactory" factory-method="createUser"/>
@@ -30,5 +32,5 @@
 	<bean id="instantiationBeanFactory" class="com.eliteGrass.instantiation.MyInstantiationBeanFactory"/>
 	<bean id="user2" factory-bean="instantiationBeanFactory" factory-method="createUser"/>-->
 
-	<bean id="user3" class="com.eliteGrass.instantiation.MyImplBeanFactory"/>
+<!--	<bean id="user3" class="com.eliteGrass.instantiation.MyImplBeanFactory"/>-->
 </beans>
