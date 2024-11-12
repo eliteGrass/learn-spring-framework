@@ -513,6 +513,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			// 封装成相应的实例
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
+		// 获取相关实例对象以及实例类
 		Object bean = instanceWrapper.getWrappedInstance();
 		Class<?> beanType = instanceWrapper.getWrappedClass();
 		if (beanType != NullBean.class) {
@@ -520,6 +521,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// Allow post-processors to modify the merged bean definition.
+		// 封装响应的元数据信息到BeanDefinition中
 		synchronized (mbd.postProcessingLock) {
 			if (!mbd.postProcessed) {
 				try {
@@ -535,6 +537,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		// Eagerly cache singletons to be able to resolve circular references
 		// even when triggered by lifecycle interfaces like BeanFactoryAware.
+		// 判断是否致辞循环依赖
 		boolean earlySingletonExposure = (mbd.isSingleton() && this.allowCircularReferences &&
 				isSingletonCurrentlyInCreation(beanName));
 		if (earlySingletonExposure) {
@@ -1120,7 +1123,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			return instantiateUsingFactoryMethod(beanName, mbd, args);
 		}
 
-		// Spring确认调用的构造器，并把确认的构造器进行缓存，下次创建不再需要进行解析
+		// Spring确认调用的构造器，并把确认的构造器进行缓存，下次创建不再需要进行解析。
+		// 单例模式不会走该逻辑，只有在进行重复创建的过程中才会进行构造函数的缓存操作
 		boolean resolved = false;
 		boolean autowireNecessary = false;
 		// 判断是否是构造注入

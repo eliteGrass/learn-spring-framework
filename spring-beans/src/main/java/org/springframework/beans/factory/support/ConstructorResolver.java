@@ -129,17 +129,24 @@ class ConstructorResolver {
 		}
 		else {
 			Object[] argsToResolve = null;
+			// 在此通过加锁方式进行判断
 			synchronized (mbd.constructorArgumentLock) {
+				// 判断是否存在相关的构造器或者是工厂方法
 				constructorToUse = (Constructor<?>) mbd.resolvedConstructorOrFactoryMethod;
+				// 存在并且已经解析相关需要的参数信息
 				if (constructorToUse != null && mbd.constructorArgumentsResolved) {
-					// Found a cached constructor...
+					// 缓存已经解析的参数信息
 					argsToUse = mbd.resolvedConstructorArguments;
+					// 如果此时参数信息并没有解析
 					if (argsToUse == null) {
+						// 获取为解析的相关参数信息
 						argsToResolve = mbd.preparedConstructorArguments;
 					}
 				}
 			}
+			// 如果未解析的参数不为空，进行参数解析
 			if (argsToResolve != null) {
+				// 进行参数解析，数据转换工作，解析成能用的参数信息
 				argsToUse = resolvePreparedArguments(beanName, mbd, bw, constructorToUse, argsToResolve, true);
 			}
 		}

@@ -10,6 +10,9 @@ public class Role {
 	private int id;
 	private Product product;
 
+	public Role() {
+	}
+
 	public Role(int id, Product product) {
 		this.id = id;
 		this.product = product;
