@@ -13,7 +13,6 @@
 	</bean>
 	<bean id="role1" class="com.eliteGrass.entity.Role">
 		<property name="id" value="1"/>
-		<property name="product" ref="product"/>
 	</bean>
 	<!--<bean id="role" class="com.eliteGrass.entity.Role">
 		<constructor-arg name="id" value="10"/>
