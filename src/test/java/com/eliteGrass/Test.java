@@ -15,7 +15,7 @@ public class Test {
 	public static void main(String[] args) {
 //		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
-		System.out.println(factory.getBean("role"));
+		System.out.println(factory.getBean("role1"));
 		System.out.println(factory.getBean("role"));
 		/*System.out.println(factory.getBean("&user3"));
 		System.out.println(factory.getBean("user3"));*/
