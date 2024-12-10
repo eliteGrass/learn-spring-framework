@@ -9,6 +9,7 @@ package com.eliteGrass.entity;
 public class Product {
 	private Integer id;
 
+
 	public Product(Integer id) {
 		this.id = id;
 	}

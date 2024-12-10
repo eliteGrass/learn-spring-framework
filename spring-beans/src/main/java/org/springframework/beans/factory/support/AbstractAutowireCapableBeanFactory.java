@@ -456,7 +456,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		try {
-			// 特殊情况下进行提前创建操作
+			// 特殊情况下进行提前创建操作，在此执行实例化后置处理器（实例化之前的方法），如果再次方法继续宁返回对象并执行一般后置处理器的后置方法，就直接进行返回
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
 				return bean;
@@ -506,7 +506,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// 封装成相应的Bean信息
 		BeanWrapper instanceWrapper = null;
 		if (mbd.isSingleton()) {
-			// 从factorybean缓存实例中进行删除
+			// 从factorybean缓存实例中进行删除并获取, factoryBeanInstanceCache：存储的是缓存的factoryBean对象，该对象是不会进入单例池的
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
@@ -517,13 +517,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		Object bean = instanceWrapper.getWrappedInstance();
 		Class<?> beanType = instanceWrapper.getWrappedClass();
 		if (beanType != NullBean.class) {
-			mbd.resolvedTargetType = beanType;
+			mbd.resolvedTargetType = beanType; // 设置解析的type类型
 		}
 
 		// Allow post-processors to modify the merged bean definition.
 		// 封装响应的元数据信息到BeanDefinition中
 		synchronized (mbd.postProcessingLock) {
-			if (!mbd.postProcessed) {
+			if (!mbd.postProcessed) { // 执行完置为true，只会执行一次
 				try {
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}

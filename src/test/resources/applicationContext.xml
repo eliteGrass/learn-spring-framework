@@ -7,8 +7,8 @@
 
 ">
 
-	<bean id="role" class="com.eliteGrass.entity.Role">
-		<constructor-arg name="id" value="10"/>
+	<bean id="role" class="com.eliteGrass.entity.Role" scope="prototype">
+		<constructor-arg name="id" value="10" type="int"/>
 		<constructor-arg name="product" ref="product"/>
 	</bean>
 	<bean id="role1" class="com.eliteGrass.entity.Role">
