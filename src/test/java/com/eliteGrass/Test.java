@@ -1,16 +1,9 @@
 package com.eliteGrass;
 
-import com.eliteGrass.entity.User;
-import com.eliteGrass.imports.MyImportRegister;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-
-import java.util.Arrays;
 
 /**
  * @Company Huahui Information Technology Co., LTD.
@@ -20,24 +13,8 @@ import java.util.Arrays;
  */
 public class Test {
 	public static void main(String[] args) {
-/*//		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
-		System.out.println(factory.getBean("role"));
-		System.out.println(factory.getBean("role"));
-//		System.out.println(factory.getBean("role1"));
-//		System.out.println(factory.getBean("role"));
-		*//*System.out.println(factory.getBean("&user3"));
-		System.out.println(factory.getBean("user3"));*//*
-		Arrays.stream(factory.getSingletonNames()).forEach(System.out::println);
-//		System.out.println(applicationContext.getBean("role"));*/
-
-
-		/*BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition("");
-		AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();*/
-
-		//
-		AnnotationConfigApplicationContext  applicationContext = new AnnotationConfigApplicationContext(MyImportRegister.class);
-		applicationContext.getBean("user");
+		//xmlBeanFactoryMethod(args);
+		defaultBeanFactory(args);
 	}
 
 
@@ -46,8 +23,20 @@ public class Test {
 	 *
 	 * @param args
 	 */
-	public static void beanFactoryMethod(String[] args) {
+	public static void xmlBeanFactoryMethod(String[] args) {
 		XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
+		System.out.println(factory.getBean("role"));
+	}
 
+	/**
+	 * DefaultListableBeanFactory相关配置
+	 *
+	 * @param args
+	 */
+	public static void defaultBeanFactory(String[] args) {
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+		reader.loadBeanDefinitions(new ClassPathResource("applicationContext.xml"));
+		System.out.println(beanFactory.getBean("role"));
 	}
 }
