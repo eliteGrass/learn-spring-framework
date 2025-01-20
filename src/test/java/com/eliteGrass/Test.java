@@ -7,6 +7,7 @@ import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 import java.util.Arrays;
@@ -34,7 +35,19 @@ public class Test {
 		/*BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition("");
 		AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();*/
 
+		//
 		AnnotationConfigApplicationContext  applicationContext = new AnnotationConfigApplicationContext(MyImportRegister.class);
 		applicationContext.getBean("user");
+	}
+
+
+	/**
+	 * 根据BeanFactory进行相关bean的创建
+	 *
+	 * @param args
+	 */
+	public static void beanFactoryMethod(String[] args) {
+		XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
+
 	}
 }
