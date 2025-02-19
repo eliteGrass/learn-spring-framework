@@ -6,6 +6,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Role;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.ReflectionUtils;
@@ -23,6 +24,6 @@ public class MyImportRegister implements ImportBeanDefinitionRegistrar {
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(UserFactoryBean.class);
 		AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
 
-		registry.registerBeanDefinition("user",beanDefinition);
+		registry.registerBeanDefinition("user", beanDefinition);
 	}
 }
