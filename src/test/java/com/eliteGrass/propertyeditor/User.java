@@ -1,5 +1,8 @@
 package com.eliteGrass.propertyeditor;
 
+import com.eliteGrass.beanfactoryregistry.entity.D;
+import org.springframework.context.annotation.Import;
+
 import java.util.Date;
 
 /**
@@ -7,6 +10,7 @@ import java.util.Date;
  * @Date 2025-02-19  21:59
  * @Description
  */
+@Import(D.class)
 public class User {
 	private String name;
 	private int age;
