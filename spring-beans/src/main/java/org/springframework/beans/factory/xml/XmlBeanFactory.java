@@ -51,8 +51,8 @@ import org.springframework.core.io.Resource;
  * {@link XmlBeanDefinitionReader}
  */
 // 过时
-@Deprecated
-@SuppressWarnings({"serial", "all"})
+// @Deprecated
+// @SuppressWarnings({"serial", "all"})
 public class XmlBeanFactory extends DefaultListableBeanFactory {
 
 	// xml解析类，主要负责读取xml封装成相应的BeanDefinition

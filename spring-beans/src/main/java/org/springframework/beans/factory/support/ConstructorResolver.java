@@ -87,18 +87,21 @@ class ConstructorResolver {
 			@Nullable Constructor<?>[] chosenCtors, @Nullable Object[] explicitArgs) {
 
 		BeanWrapperImpl bw = new BeanWrapperImpl();
-		this.beanFactory.initBeanWrapper(bw);	//装配类型转换器
+		//装配类型转换器
+		this.beanFactory.initBeanWrapper(bw);
 		// 使用的构造器
 		Constructor<?> constructorToUse = null;
-		ArgumentsHolder argsHolderToUse = null;	// 用的解析后的参数
+		// 用的解析后的参数
+		ArgumentsHolder argsHolderToUse = null;
 		// 参数信息：以进行解析的
 		Object[] argsToUse = null;
-
-		if (explicitArgs != null) { // 是否手动指定参数
+		// 是否手动指定参数
+		if (explicitArgs != null) {
 			argsToUse = explicitArgs;
 		}
 		else {
-			Object[] argsToResolve = null; // 未解析的
+			// 未解析的
+			Object[] argsToResolve = null;
 			// 在此通过加锁方式进行判断
 			synchronized (mbd.constructorArgumentLock) {
 				// 判断是否存在相关的构造器或者是工厂方法（缓存，第一次没有）

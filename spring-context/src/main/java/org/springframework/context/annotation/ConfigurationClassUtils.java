@@ -86,6 +86,7 @@ abstract class ConfigurationClassUtils {
 			return false;
 		}
 
+		// 获取注解信息
 		AnnotationMetadata metadata;
 		if (beanDef instanceof AnnotatedBeanDefinition &&
 				className.equals(((AnnotatedBeanDefinition) beanDef).getMetadata().getClassName())) {
@@ -112,12 +113,15 @@ abstract class ConfigurationClassUtils {
 			}
 		}
 
+		// 如果是注解Configuration注解，就设置属性full
 		if (isFullConfigurationCandidate(metadata)) {
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_FULL);
 		}
+		// 如果是Component、ComponentScan、Import、ImportResource注解，就设置为lite注解
 		else if (isLiteConfigurationCandidate(metadata)) {
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_LITE);
 		}
+		// 如果没有注解就不进行扫描
 		else {
 			return false;
 		}

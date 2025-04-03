@@ -526,12 +526,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
+				// 无操作
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
+				// 之后beanFactory后置处理器，主要是内置的ConfigurationClassPostProcessor
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
+				// beanPostProcessor进行注册
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
@@ -547,6 +550,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
+				// 开始进行bean的创建工作
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
@@ -646,12 +650,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 		// 设置类加载器，用于创建和反射使用
 		beanFactory.setBeanClassLoader(getClassLoader());
-		// 创建el表达式解析器
+		// 创建el表达式解析器（进行EL表达式的解析工作）
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		// 创建用于文件流的属性编辑器，他和convert类似
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
-		// 设置bean后置处理器，用于对Aware接口进行注入
+		// 设置bean后置处理器，用于对Aware接口进行注入，添加到list中没有进行注册，所以不再单例池中进行维护
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 		beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);
@@ -708,6 +712,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * <p>Must be called before singleton instantiation.
 	 */
 	protected void  invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+		// 执行BeanFactory后置处理器工作,他主要干预的是bean的注册信息中，可以对bean定义信息BeanDefinition进行修改
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory, getBeanFactoryPostProcessors());
 
 		// Detect a LoadTimeWeaver and prepare for weaving, if found in the meantime

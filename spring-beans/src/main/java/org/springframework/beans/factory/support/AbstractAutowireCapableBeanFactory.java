@@ -456,6 +456,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		try {
+			// 注意InstantiationAwareBeanPostProcessor
 			// 特殊情况下进行提前创建操作，在此执行实例化后置处理器（实例化之前的方法），如果再次方法继续宁返回对象并执行一般后置处理器的后置方法，就直接进行返回
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
@@ -553,6 +554,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		try {
 			// 进行属性的填充工作
 			populateBean(beanName, mbd, instanceWrapper);
+			// 进行初始化
 			exposedObject = initializeBean(beanName, exposedObject, mbd);
 		}
 		catch (Throwable ex) {
@@ -1745,12 +1747,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			}, getAccessControlContext());
 		}
 		else {
-			// 执行aware方法
+			// 执行aware方法，这个
 			invokeAwareMethods(beanName, bean);
 		}
 
 		Object wrappedBean = bean;
 		if (mbd == null || !mbd.isSynthetic()) {
+			// 执行后置处理器，其中代理就是在这里进行创建的
 			wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
 		}
 

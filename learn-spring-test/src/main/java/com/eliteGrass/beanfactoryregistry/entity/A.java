@@ -1,0 +1,9 @@
+package com.eliteGrass.beanfactoryregistry.entity;
+
+/**
+ * @Author liteGrass
+ * @Date 2025-02-26  22:23
+ * @Description
+ */
+public class A {
+}

@@ -212,6 +212,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 					logger.trace("Returning cached instance of singleton bean '" + beanName + "'");
 				}
 			}
+			// 判断是否是FactoryBean对象
 			bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);
 		}
 		// 第一次创建肯定为null的情况
@@ -249,7 +250,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 
 			try {
-				// 合并父子bean
+				// 合并父子bean，可能存在父子bean的问题，他主要是解决抽象bean的问题
 				RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);
 				checkMergedBeanDefinition(mbd, beanName, args);
 

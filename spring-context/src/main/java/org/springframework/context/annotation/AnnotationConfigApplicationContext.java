@@ -63,7 +63,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
-		// 创建解析起以及扫描器，如果是类使用解析器，如果是包采用扫描器
+		// 创建解析起以及扫描器，如果是类使用解析器，如果是包采用扫描器， 内部会进行注册一些内置的后置处理器信息
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
@@ -158,6 +158,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	@Override
 	public void register(Class<?>... componentClasses) {
 		Assert.notEmpty(componentClasses, "At least one component class must be specified");
+		// 进行bean的注册工作
 		this.reader.register(componentClasses);
 	}
 
